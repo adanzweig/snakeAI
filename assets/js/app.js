@@ -62,4 +62,7 @@ $(document).ready(function() {
     let game = new SnakeGame();
     gameLoop(game);
   });
+  $('.new-wall').click(function(){
+      game.renderWall();
+  })
 });

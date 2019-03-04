@@ -1,10 +1,11 @@
 class SnakeGame {
     static direction = 3;
     static steps = 0;
-    static games = 0;
+    static games = 1;
     static stepLastEaten = 0;
     static stepsToRandom = 0;
     static lastSnakePosition = [0,0,0,0,0,0,0,0];
+    static walls = [];
     constructor() {
         this.grid = this.createGrid(25);
         this.snake = new Snake();
@@ -19,7 +20,7 @@ class SnakeGame {
     }
 
     isGameOver() {
-        if (this.snake.isInBounds() && this.snake.isNotOverlapping() && SnakeGame.steps - SnakeGame.stepLastEaten < 600) {
+        if (this.snake.isInBounds() && this.snake.isNotOverlapping() && SnakeGame.steps - SnakeGame.stepLastEaten < 600 && this.snake.notHitWall()) {
             return false;
         } else {
             return true;
@@ -90,9 +91,39 @@ class SnakeGame {
                     return 0;
                 }
             }
+
+            for (var i = 0; i < SnakeGame.walls.length; i++) {
+                if (SnakeGame.walls[i][0] == pos1[0] && SnakeGame.walls[i][1] == pos1[1]) {
+                    return 0;
+                }
+            }
+
             return ret;
         }
     }
+    renderFood() {
+        $(".food").removeClass("food");
+        let food = this.food.location;
+        $('*[data-grid="' + food[0] + "," + food[1] + '"]').addClass("food");
+    }
+    renderWall() {
+        let newWall = new Wall();
+        var newWallPos = newWall.getWallPosition();
+        if(newWallPos[0] == this.food.location[0] && newWallPos[1] == this.food.location[1]){
+            this.renderWall();
+            return;
+        }
+        let pieces = this.snake.pieces;
+        for (var i = 0; i < pieces.length; i++) {
+            if (pieces[i][0] == newWallPos[0] && pieces[i][1] == newWallPos[1]) {
+                this.renderWall();
+                return;
+            }
+        }
+        SnakeGame.walls.push(newWall.getWallPosition());
+        $('*[data-grid="' + newWall.getWallPosition()[0] + "," + newWall.getWallPosition()[1] + '"]').addClass("wall");
+    }
+
     renderFood() {
         $(".food").removeClass("food");
         let food = this.food.location;
