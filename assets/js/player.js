@@ -141,6 +141,7 @@ function aiGame(game) {
       $('.games span').html(SnakeGame.games);
       console.log(xs);
       console.log(ys);
+      alert('Training new generation');
       model.compile({loss:"meanSquaredError",optimizer:"sgd"});
       model.fit(tf.tensor(xs),tf.tensor(ys),{epochs:50}).then(() => {
         console.log("TEST");
@@ -149,13 +150,10 @@ function aiGame(game) {
         let game = new SnakeGame();
         gameLoop(game);
       });
-      // $(".game-over").fadeIn("fast");
-      // $(".new-game").focus();
     }
   }, game.speed);
 }
 function predictPos(inputs){
-  $('')
   console.log("PREDICTION");
   console.log("I:"+inputs);
   var arr = model.predict(tf.tensor2d(inputs,[1,8])).dataSync();
