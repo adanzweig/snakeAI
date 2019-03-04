@@ -1,11 +1,4 @@
 class SnakeGame {
-    static direction = 3;
-    static steps = 0;
-    static games = 1;
-    static stepLastEaten = 0;
-    static stepsToRandom = 0;
-    static lastSnakePosition = [0,0,0,0,0,0,0,0];
-    static walls = [];
     constructor() {
         this.grid = this.createGrid(25);
         this.snake = new Snake();
@@ -20,7 +13,7 @@ class SnakeGame {
     }
 
     isGameOver() {
-        if (this.snake.isInBounds() && this.snake.isNotOverlapping() && SnakeGame.steps - SnakeGame.stepLastEaten < 600 && this.snake.notHitWall()) {
+        if (this.snake.isInBounds() && this.snake.isNotOverlapping() && steps - stepLastEaten < 600 && this.snake.notHitWall()) {
             return false;
         } else {
             return true;
@@ -74,10 +67,10 @@ class SnakeGame {
         var left = this.isColission([this.snake.pieces[0][0],parseInt(this.snake.pieces[0][1])-1]);
         var right = this.isColission([this.snake.pieces[0][0],parseInt(this.snake.pieces[0][1])+1]);
 
-        var au = (this.snake.pieces[0][0] > this.food.location[0])?(Math.floor(SnakeGame.stepsToRandom/100)+2):0;
-        var ad = (this.snake.pieces[0][0] < this.food.location[0])?(Math.floor(SnakeGame.stepsToRandom/100)+2):0;
-        var al = (this.snake.pieces[0][1] > this.food.location[1])?(Math.floor(SnakeGame.stepsToRandom/100)+2):0;
-        var ar = (this.snake.pieces[0][1] < this.food.location[1])?(Math.floor(SnakeGame.stepsToRandom/100)+2):0;
+        var au = (this.snake.pieces[0][0] > this.food.location[0])?(Math.floor(stepsToRandom/100)+2):0;
+        var ad = (this.snake.pieces[0][0] < this.food.location[0])?(Math.floor(stepsToRandom/100)+2):0;
+        var al = (this.snake.pieces[0][1] > this.food.location[1])?(Math.floor(stepsToRandom/100)+2):0;
+        var ar = (this.snake.pieces[0][1] < this.food.location[1])?(Math.floor(stepsToRandom/100)+2):0;
         return [up,down,left,right,au,ad,al,ar];
     }
     isColission(pos1){
@@ -92,8 +85,8 @@ class SnakeGame {
                 }
             }
 
-            for (var i = 0; i < SnakeGame.walls.length; i++) {
-                if (SnakeGame.walls[i][0] == pos1[0] && SnakeGame.walls[i][1] == pos1[1]) {
+            for (var i = 0; i < walls.length; i++) {
+                if (walls[i][0] == pos1[0] && walls[i][1] == pos1[1]) {
                     return 0;
                 }
             }
@@ -120,7 +113,7 @@ class SnakeGame {
                 return;
             }
         }
-        SnakeGame.walls.push(newWall.getWallPosition());
+        walls.push(newWall.getWallPosition());
         $('*[data-grid="' + newWall.getWallPosition()[0] + "," + newWall.getWallPosition()[1] + '"]').addClass("wall");
     }
 

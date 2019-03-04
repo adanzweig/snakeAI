@@ -4,8 +4,8 @@ class Snake {
         this.pieces = [[12, 12], [12, 11], [12, 10], [12, 9], [12, 8]];
     }
     notHitWall(){
-        for(var i=0;i<SnakeGame.walls.length;i++){
-            if (this.pieces[0][0] == SnakeGame.walls[i][0] && this.pieces[0][1] == SnakeGame.walls[i][1] ){
+        for(var i=0;i<walls.length;i++){
+            if (this.pieces[0][0] == walls[i][0] && this.pieces[0][1] == walls[i][1] ){
                 return false;
             }
         }

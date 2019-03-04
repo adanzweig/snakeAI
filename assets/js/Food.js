@@ -14,7 +14,7 @@ class Food {
         }
 
         this.location = coord;
-        SnakeGame.stepLastEaten = SnakeGame.steps;
+        stepLastEaten = steps;
     }
 
     randomCoord() {

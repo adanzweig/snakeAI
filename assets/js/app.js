@@ -1,4 +1,12 @@
 /* Objects */
+direction = 3;
+steps = 0;
+games = 1;
+stepLastEaten = 0;
+stepsToRandom = 0;
+lastSnakePosition = [0,0,0,0,0,0,0,0];
+walls = [];
+
 const model = tf.sequential();
 model.add(tf.layers.dense({units:8,inputShape:[8]}));
 model.add(tf.layers.dense({units:300,inputShape:[150]}));

@@ -51,7 +51,7 @@ function aiGame(game) {
 
       var flagKeyAlreadythere = false;
       for(i=0;i<xs.length;i++){
-        if(xs[i].toString() == SnakeGame.lastSnakePosition.toString()){
+        if(xs[i].toString() == lastSnakePosition.toString()){
           flagKeyAlreadythere = true;
         }
       }
@@ -59,19 +59,19 @@ function aiGame(game) {
         flagKeyAlreadythere = true;
       }
       if(!flagKeyAlreadythere){
-        xs.push(SnakeGame.lastSnakePosition);
+        xs.push(lastSnakePosition);
         var desiredResult = [0,0,0,0];
-        if(SnakeGame.lastSnakePosition[0] > 0 && SnakeGame.lastSnakePosition[4] > 0){
-          desiredResult[0] = SnakeGame.lastSnakePosition[4];
+        if(lastSnakePosition[0] > 0 && lastSnakePosition[4] > 0){
+          desiredResult[0] = lastSnakePosition[4];
         }
-        if(SnakeGame.lastSnakePosition[1] > 0 && SnakeGame.lastSnakePosition[5] > 0){
-          desiredResult[1] = SnakeGame.lastSnakePosition[5];
+        if(lastSnakePosition[1] > 0 && lastSnakePosition[5] > 0){
+          desiredResult[1] = lastSnakePosition[5];
         }
-        if(SnakeGame.lastSnakePosition[2] > 0 && SnakeGame.lastSnakePosition[6] > 0){
-          desiredResult[2] = SnakeGame.lastSnakePosition[6];
+        if(lastSnakePosition[2] > 0 && lastSnakePosition[6] > 0){
+          desiredResult[2] = lastSnakePosition[6];
         }
-        if(SnakeGame.lastSnakePosition[3] > 0 && SnakeGame.lastSnakePosition[7] > 0){
-          desiredResult[3] = SnakeGame.lastSnakePosition[7];
+        if(lastSnakePosition[3] > 0 && lastSnakePosition[7] > 0){
+          desiredResult[3] = lastSnakePosition[7];
         }
         if(desiredResult == [0,0,0,0]){
           desiredResult = [lastSnakePosition[0],lastSnakePosition[1],lastSnakePosition[2],lastSnakePosition[3]]
@@ -85,19 +85,19 @@ function aiGame(game) {
         game.parseKey(event.keyCode);
         $("body").unbind("keydown");
       });
-      SnakeGame.steps++;
-      SnakeGame.stepsToRandom++;
-      $('.steps span').html(SnakeGame.steps);
+      steps++;
+      stepsToRandom++;
+      $('.steps span').html(steps);
       var pos  = 0;
       // model.fit(xs, ys, {epochs: 50}).then(() => {
         // Use the model to do inference on a data point the model hasn't seen before:
       var inputs = game.getSnakeVision();
-      SnakeGame.lastSnakePosition = inputs;
-        if(SnakeGame.stepsToRandom > 150){
+      lastSnakePosition = inputs;
+        if(stepsToRandom > 150){
           console.log("--------");
           console.log("RANDOOM");
           console.log("--------");
-          SnakeGame.stepsToRandom = 0;
+          stepsToRandom = 0;
           var randomizerList = [];
           for(var i= 0;i<4;i++){
             if(inputs[i] == 1){
@@ -112,19 +112,19 @@ function aiGame(game) {
       // });
       switch (pos) {
         case 2:
-          SnakeGame.direction = 2;
+          direction = 2;
           $("body").trigger(jQuery.Event("keydown", { keyCode: 37 }));
           break;
         case 0:
-          SnakeGame.direction = 0;
+          direction = 0;
           $("body").trigger(jQuery.Event("keydown", { keyCode: 38 }));
           break;
         case 3:
-          SnakeGame.direction = 3;
+          direction = 3;
           $("body").trigger(jQuery.Event("keydown", { keyCode: 39 }));
           break;
         case 1:
-          SnakeGame.direction = 1;
+          direction = 1;
           $("body").trigger(jQuery.Event("keydown", { keyCode: 40 }));
           break;
       }
@@ -134,11 +134,11 @@ function aiGame(game) {
       game.renderSnake();
       gameLoop(game);
     } else {
-      SnakeGame.games++;
-      SnakeGame.stepLastEaten = 0;
-      SnakeGame.steps = 0;
-      SnakeGame.stepsToRandom = 0;
-      $('.games span').html(SnakeGame.games);
+      games++;
+      stepLastEaten = 0;
+      steps = 0;
+      stepsToRandom = 0;
+      $('.games span').html(games);
       console.log(xs);
       console.log(ys);
       alert('Training new generation');
@@ -158,7 +158,7 @@ function predictPos(inputs){
   console.log("I:"+inputs);
   var arr = model.predict(tf.tensor2d(inputs,[1,8])).dataSync();
   console.log("P:"+arr);
-  console.log("D:"+SnakeGame.direction);
+  console.log("D:"+direction);
   var pos = arr.indexOf(Math.max(...arr));
   console.log("pos:"+pos);
 
@@ -177,16 +177,16 @@ function predictPos(inputs){
   return pos;
 }
 function isGoBack(p){
-  if(p == 0 && SnakeGame.direction == 1){
+  if(p == 0 && direction == 1){
     return true;
   }
-  if(p == 1 && SnakeGame.direction == 0){
+  if(p == 1 && direction == 0){
     return true;
   }
-  if(p == 2 && SnakeGame.direction == 3){
+  if(p == 2 && direction == 3){
     return true;
   }
-  if(p == 3 && SnakeGame.direction == 2){
+  if(p == 3 && direction == 2){
     return true;
   }
   return false;
