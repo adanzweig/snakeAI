@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Javascript Snake</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/reset.css" />
+    <link rel="stylesheet" type="text/css" href="assets/css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@0.15.3/dist/tf.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <header>
+        <a class="score"><small>Score</small><span>0</span></a>
+        <a class="games"><small>Gen</small><span>1</span></a>
+        <a class="steps"><small>Steps</small><span>0</span></a>
+        <img src="assets/images/snake.svg" class="icon" />
+        <button class="new-game">Play</button>
+      </header>
+      <section class="snake-game"></section>
+      <section class="game-over">
+        <span>Game Over</span> <span>Enter or Space to restart</span>
+      </section>
+      <section class="mobile-buttons">
+        <button class="left">←</button> <button class="up">↑</button>
+        <button class="down">↓</button> <button class="right">→</button>
+      </section>
+    </div>
+
+    <script
+      type="text/javascript"
+      src="https://code.jquery.com/jquery-3.1.1.min.js"
+    ></script>
+    <script type="text/javascript" src="assets/js/app.js"></script>
+    <script type="text/javascript" src="assets/js/Snake.js"></script>
+    <script type="text/javascript" src="assets/js/player.js"></script>
+  </body>
+</html>
